@@ -1,6 +1,6 @@
 SELECT
     customer
-    --,timestamp_date
+    ,timestamp_date AS event_date
     ,DATE(timestamp_date) AS daily
     ,DATE_SUB(DATE(timestamp_date), INTERVAL EXTRACT(DAYOFWEEK FROM DATE(timestamp_date))-2 DAY) AS weekly
     ,DATE(EXTRACT(YEAR FROM DATE(timestamp_date)), EXTRACT(MONTH FROM DATE(timestamp_date)), 1) AS monthly
@@ -22,7 +22,7 @@ WHERE
     AND customer = 'docomopacific'
 GROUP BY
     customer
-    --,timestamp_date
+    ,event_date
     ,action
     ,search_term
     ,count

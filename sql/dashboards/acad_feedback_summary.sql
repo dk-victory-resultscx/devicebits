@@ -22,7 +22,6 @@ SELECT
     --END AS ratings
     ,SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) AS positive_feedback
     ,SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END) AS negative_feedback
-    ,SUM(CASE WHEN evnt_cat_name='page_view' THEN 1 ELSE 0 END) AS overall_pageview
     ,COUNT(DISTINCT(CONCAT(user_pseudo_id,evnt_ga_session_id))) AS sessions_count
     ,SUM(CASE WHEN evnt_cat_name='page_view' THEN 1 ELSE 0 END) AS overall_pageview
     ,SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) / COUNT(DISTINCT((CONCAT(user_pseudo_id,evnt_ga_session_id)))) AS engagement_rate
@@ -31,7 +30,6 @@ SELECT
     ,(SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) - 
     COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END))) / 
     SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS containment_rate
-    ,(SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) + SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END)) AS feedback_count
     ,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 FROM analytics_gds.ga4_events
 WHERE

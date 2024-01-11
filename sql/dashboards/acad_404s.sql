@@ -1,6 +1,6 @@
 SELECT
     a404.customer
-    ,SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE) AS pageview_date
+    ,SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE) AS event_date
     ,DATE(SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE)) AS daily
     ,DATE_SUB(DATE(SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE)), INTERVAL EXTRACT(DAYOFWEEK FROM DATE(SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE)))-2 DAY) AS weekly
     ,DATE(EXTRACT(YEAR FROM DATE(SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE))), EXTRACT(MONTH FROM DATE(SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', a404.timestamp, 'America/New_York') AS DATE))), 1) AS monthly
@@ -22,6 +22,7 @@ SELECT
 FROM analytics.acad_404s a404
 GROUP BY
     a404.customer
-    ,pageview_date
+    ,a404.timestamp
+    ,event_date
     ,a404.originating_link
     ,a404.page_url

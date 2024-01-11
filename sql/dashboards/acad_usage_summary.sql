@@ -1,4 +1,3 @@
-
 WITH ga4_event AS(
     SELECT
         customer
