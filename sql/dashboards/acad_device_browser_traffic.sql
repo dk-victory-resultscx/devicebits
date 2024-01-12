@@ -29,9 +29,6 @@ SELECT
     ,(SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) + SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END)) AS feedback_count
     ,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 FROM analytics_gds.ga4_events
-WHERE
-    event_date BETWEEN '2023-12-31' AND '2024-01-06'
-    AND customer = 'docomopacific'
 GROUP BY
     customer
     ,event_date

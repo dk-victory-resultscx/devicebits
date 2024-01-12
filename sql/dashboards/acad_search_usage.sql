@@ -17,9 +17,6 @@ SELECT
     ,count
     ,COUNT(action) AS action_count
 FROM analytics_gds.acad_search
-WHERE
-    timestamp_date BETWEEN '2023-12-31' AND '2024-01-06'
-    AND customer = 'docomopacific'
 GROUP BY
     customer
     ,event_date
