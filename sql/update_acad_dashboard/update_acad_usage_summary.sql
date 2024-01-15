@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_usage_summary
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_usage_summary (

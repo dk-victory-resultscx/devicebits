@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_device_browser_traffic
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_device_browser_traffic (
@@ -54,6 +54,8 @@ BEGIN
 			,(SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) + SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END)) AS feedback_count
 			,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 		FROM analytics_gds.ga4_events
+        WHERE
+			event_date > (CURRENT_DATE - 4)
 		GROUP BY
 			customer
 			,event_date
@@ -62,9 +64,7 @@ BEGIN
 			,dvce_operating_system_version
 			,wbinfo_browser
 			,wbinfo_browser_version
-			,trfi_channel_grouping_user
-		WHERE
-			event_date > (CURRENT_DATE - 4)
+			,trfi_channel_grouping_user		
 	);
 	
 	COMMIT TRANSACTION; 

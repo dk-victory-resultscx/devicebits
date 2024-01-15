@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_geographic_location
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_geographic_location (
@@ -64,6 +64,8 @@ BEGIN
 			,(SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) + SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END)) AS feedback_count
 			,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 		FROM analytics_gds.ga4_events
+        WHERE
+			event_date > (CURRENT_DATE - 4)
 		GROUP BY
 			customer
 			,event_date
@@ -72,9 +74,7 @@ BEGIN
 			,geo_country
 			,geo_city
 			,geo_metro
-			,language
-		WHERE
-			event_date > (CURRENT_DATE - 4)
+			,language		
 	);
 	
 	COMMIT TRANSACTION; 

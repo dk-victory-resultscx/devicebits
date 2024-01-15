@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_content_usage
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_content_usage (
@@ -51,15 +51,16 @@ BEGIN
 			,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 		FROM analytics_gds.ga4_events
 		WHERE
-			TRIM(LOWER(content_type)) = 'device home'
-			OR LOWER(content_type) not like '%home'
+            event_date > (CURRENT_DATE - 4)
+            AND (
+			    TRIM(LOWER(content_type)) = 'device home'
+			    OR LOWER(content_type) not like '%home'
+            )
 		GROUP BY
 			customer
 			,event_date
 			,content_type
 			,evnt_url
-		WHERE
-			event_date > (CURRENT_DATE - 4)
 	);
 	
 	COMMIT TRANSACTION; 

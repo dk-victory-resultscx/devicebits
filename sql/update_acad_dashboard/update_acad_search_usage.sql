@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_search_usage
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_search_usage (
@@ -42,14 +42,14 @@ BEGIN
 			,count
 			,COUNT(action) AS action_count
 		FROM analytics_gds.acad_search
+        WHERE
+			timestamp_date > (CURRENT_DATE - 4)
 		GROUP BY
 			customer
 			,event_date
 			,action
 			,search_term
-			,count
-		WHERE
-			event_date > (CURRENT_DATE - 4)
+			,count		
 	);
 	
 	COMMIT TRANSACTION; 

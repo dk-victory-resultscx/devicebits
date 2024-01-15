@@ -19,7 +19,7 @@ BEGIN
 	THEN 
 		DELETE FROM analytics_rpt.acad_feedback_summary
 		WHERE
-			event_date > (CURRENT_DATE - 4)
+			event_date > (CURRENT_DATE - 4);
 	END IF; 
 	
 	INSERT INTO analytics_rpt.acad_feedback_summary (
@@ -57,13 +57,13 @@ BEGIN
 			SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS containment_rate
 			,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
 		FROM analytics_gds.ga4_events
+        WHERE
+			event_date > (CURRENT_DATE - 4)
 		GROUP BY
 			customer
 			,event_date
 			,content_type
-			,evnt_url
-		WHERE
-			event_date > (CURRENT_DATE - 4)
+			,evnt_url		
 	);
 	
 	COMMIT TRANSACTION; 
