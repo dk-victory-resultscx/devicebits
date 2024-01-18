@@ -21,10 +21,14 @@ CREATE TABLE analytics_rpt.acad_usage_summary AS (
             ,COUNT(DISTINCT(user_pseudo_id)) AS total_users
             ,SUM(CASE WHEN evnt_cat_name = 'first_visit' THEN 1 ELSE 0 END) AS new_users
             ,(SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) - 
-            COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END))) / 
-            SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS containment_rate
+                COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END))) / 
+                SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS containment_rate
             ,(SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) + SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END)) AS feedback_count
             ,(SUM(evnt_engagement_time_msec)/1000) / SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS avg_engagement_time
+            ,COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END)) AS contact_us
+            ,SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) AS feedback_postive
+            ,SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END) AS feedback_negative
+            ,(SUM(evnt_engagement_time_msec)/1000) AS engagement_time
         FROM analytics_gds.ga4_events
         GROUP BY
             customer
@@ -43,22 +47,8 @@ CREATE TABLE analytics_rpt.acad_usage_summary AS (
     )
 
     SELECT
-        ga4.customer
-        ,ga4.event_date
-        ,ga4.daily
-        ,ga4.weekly
-        ,ga4.monthly
-        ,ga4.quarterly
-        ,ga4.yearly
-        ,ga4.sessions_count
-        ,ga4.overall_pageview
-        ,ga4.engagement_rate
-        ,ga4.total_users
-        ,ga4.new_users
-        ,ga4.containment_rate
-        ,ga4.feedback_count
+        ga4.*
         ,search.total_searches
-        ,avg_engagement_time
     FROM ga4_event ga4
     LEFT JOIN searches search
         ON ga4.customer = search.customer
