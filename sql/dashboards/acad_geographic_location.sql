@@ -17,17 +17,22 @@ CREATE TABLE analytics_rpt.acad_geographic_location AS (
         ,geo_sub_continent
         ,geo_country
         ,CASE
-        WHEN TRIM(geo_city) = ''
-        THEN NULL
-        ELSE geo_city
+            WHEN TRIM(geo_region) = ''
+            THEN NULL
+            ELSE geo_region
+        END AS geo_region
+        ,CASE
+            WHEN TRIM(geo_city) = ''
+            THEN NULL
+            ELSE geo_city
         END AS geo_city
         ,CASE
-        WHEN TRIM(geo_metro) = ''
-        THEN NULL
-        WHEN TRIM(geo_metro) = '(not set)'
-        THEN NULL
-        ELSE geo_metro
-        END AS geo_metro
+            WHEN TRIM(geo_metro) = ''
+            THEN NULL
+            WHEN TRIM(geo_metro) = '(not set)'
+            THEN NULL
+            ELSE geo_metro
+        END AS geo_metro        
         ,language
         ,SUM(CASE WHEN evnt_cat_name='page_view' THEN 1 ELSE 0 END) AS overall_pageview
         ,SUM(CASE WHEN evnt_cat_name = 'session_start' THEN evnt_engaged_session_event ELSE NULL END) AS engaged_sessions
@@ -51,6 +56,7 @@ CREATE TABLE analytics_rpt.acad_geographic_location AS (
         ,geo_continent
         ,geo_sub_continent
         ,geo_country
+        ,geo_region
         ,geo_city
         ,geo_metro
         ,language

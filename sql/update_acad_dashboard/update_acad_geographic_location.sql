@@ -40,6 +40,11 @@ BEGIN
 			,geo_continent
 			,geo_sub_continent
 			,geo_country
+            ,CASE
+                WHEN TRIM(geo_region) = ''
+                THEN NULL
+                ELSE geo_region
+            END AS geo_region
 			,CASE
 			  WHEN TRIM(geo_city) = ''
 			  THEN NULL
@@ -77,6 +82,7 @@ BEGIN
 			,geo_continent
 			,geo_sub_continent
 			,geo_country
+            ,geo_region
 			,geo_city
 			,geo_metro
 			,language		

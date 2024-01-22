@@ -29,6 +29,10 @@ CREATE TABLE analytics_rpt.acad_usage_summary AS (
             ,SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) AS feedback_postive
             ,SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END) AS feedback_negative
             ,(SUM(evnt_engagement_time_msec)/1000) AS engagement_time
+
+            ,COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END)) AS contact_us
+            ,COUNT(DISTINCT(CONCAT(user_pseudo_id,evnt_ga_session_id))) AS sessions_count
+
         FROM analytics_gds.ga4_events
         GROUP BY
             customer
@@ -47,7 +51,26 @@ CREATE TABLE analytics_rpt.acad_usage_summary AS (
     )
 
     SELECT
-        ga4.*
+        ga4.customer
+        ,ga4.event_date
+        ,ga4.daily
+        ,ga4.weekly
+        ,ga4.monthly
+        ,ga4.quarterly
+        ,ga4.yearly
+        ,ga4.overall_pageview            
+        ,ga4.engaged_sessions
+        ,ga4.sessions_count
+        ,ga4.total_users
+        ,ga4.new_users
+        ,ga4.feedback_postive
+        ,ga4.feedback_negative
+        ,ga4.feedback_count
+        ,ga4.engagement_rate
+        ,ga4.engagement_time
+        ,ga4.avg_engagement_time
+        ,ga4.contact_us
+        ,ga4.containment_rate
         ,search.total_searches
     FROM ga4_event ga4
     LEFT JOIN searches search
