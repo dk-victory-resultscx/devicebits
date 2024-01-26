@@ -1,0 +1,22 @@
+<pdfxml Creator="TCPDF" Producer="TCPDF 5.9.107 (http://www.tcpdf.org)" CreationDate="D:20231228142048+00'00'" ModDate="D:20231228142048+00'00'" Trapped="/False">
+  <LTPage y0="0" y1="595.28" x0="0" x1="841.89" width="841.89" height="595.28" bbox="[0, 0, 841.89, 595.28]" pageid="1" rotate="0" page_index="0" page_label="">
+    <LTImage y0="0.0" y1="595.28" x0="1.13" x1="840.75" width="839.62" height="595.28" bbox="[1.13, 0.0, 840.75, 595.28]" name="I1" colorspace="[&quot;/DeviceRGB&quot;]" bits="8" imagemask="null" srcsize="[835, 592]" stream="&lt;PDFStream(18): raw=38791, {'Type': /'XObject', 'Subtype': /'Image', 'Width': 835, 'Height': 592, 'ColorSpace': /'DeviceRGB', 'BitsPerComponent': 8, 'Filter': /'DCTDecode', 'Length': 38791}&gt;">
+      <LTFigure y0="0.0" y1="595.28" x0="1.13" x1="840.75" width="839.62" height="595.28" bbox="[1.13, 0.0, 840.75, 595.28]" name="I1" matrix="[839.62, 0.0, 0.0, 595.28, 1.13, 0.0]">
+        <LTTextLineHorizontal y0="148.806" y1="172.806" x0="212.958" x1="623.262" width="410.304" height="24.0" bbox="[212.958, 148.806, 623.262, 172.806]" word_margin="0.1"><LTTextBoxHorizontal y0="148.806" y1="172.806" x0="212.958" x1="623.262" width="410.304" height="24.0" bbox="[212.958, 148.806, 623.262, 172.806]" index="1">Azure Self-Service: Passwords </LTTextBoxHorizontal></LTTextLineHorizontal>
+        <LTTextLineHorizontal y0="13.552" y1="31.552" x0="5.724" x1="704.736" width="699.012" height="18.0" bbox="[5.724, 13.552, 704.736, 31.552]" word_margin="0.1"><LTTextBoxHorizontal y0="13.552" y1="31.552" x0="5.724" x1="704.736" width="699.012" height="18.0" bbox="[5.724, 13.552, 704.736, 31.552]" index="2"> 12/28/2023 355884 </LTTextBoxHorizontal></LTTextLineHorizontal>
+        <LTRect y0="315.28" y1="345.28" x0="269.346" x1="566.876" width="297.53" height="30.0" bbox="[269.346, 315.28, 566.876, 345.28]" linewidth="0.57" pts="[[269.346, 345.28], [566.876, 345.28], [566.876, 315.28], [269.346, 315.28]]">
+          <LTTextLineHorizontal y0="316.306" y1="340.306" x0="269.346" x1="566.874" width="297.528" height="24.0" bbox="[269.346, 316.306, 566.874, 340.306]" word_margin="0.1"><LTTextBoxHorizontal y0="316.306" y1="340.306" x0="269.346" x1="566.874" width="297.528" height="24.0" bbox="[269.346, 316.306, 566.874, 340.306]" index="0">DONN KEVIN VICTORY </LTTextBoxHorizontal></LTTextLineHorizontal>
+        </LTRect>
+        <LTRect y0="147.78" y1="177.78" x0="212.958" x1="623.258" width="410.3" height="30.0" bbox="[212.958, 147.78, 623.258, 177.78]" linewidth="0.57" pts="[[212.958, 177.78], [623.258, 177.78], [623.258, 147.78], [212.958, 147.78]]"/>
+        <LTTextLineHorizontal y0="408.21" y1="418.21" x0="3.18" x1="6.36" width="3.18" height="10.0" bbox="[3.18, 408.21, 6.36, 418.21]" word_margin="0.1"> </LTTextLineHorizontal>
+        <Annot Type="/Annot" Subtype="/Link" Contents="http://www.tcpdf.org" P="&lt;PDFObjRef:6&gt;" NM="0001-0000" M="D:20231228142048+00'00'" Border="[0, 0, 0]" A="{&quot;S&quot;: &quot;/URI&quot;, &quot;URI&quot;: &quot;http://www.tcpdf.org&quot;}" H="/I" bbox="[2.83, 1.0, 20.67, 2.16]" x0="2.83" x1="20.67" y0="1.0" y1="2.16" height="1.1600000000000001" width="17.840000000000003" URI="http://www.tcpdf.org">
+          <LTTextLineHorizontal y0="1.004" y1="2.004" x0="2.83" x1="20.669" width="17.839" height="1.0" bbox="[2.83, 1.004, 20.669, 2.004]" word_margin="0.1"><LTTextBoxHorizontal y0="1.004" y1="2.004" x0="2.83" x1="20.669" width="17.839" height="1.0" bbox="[2.83, 1.004, 20.669, 2.004]" index="3">Powered by TCPDF (www.tcpdf.org) </LTTextBoxHorizontal></LTTextLineHorizontal>
+        </Annot>
+      </LTFigure>
+    </LTImage>
+    <LTTextLineVertical y0="408.21" y1="593.21" x0="0.0" x1="3.18" width="3.18" height="185.0" bbox="[0.0, 408.21, 3.18, 593.21]" word_margin="0.1"> </LTTextLineVertical>
+    <LTTextLineVertical y0="358.21" y1="393.21" x0="0.0" x1="3.18" width="3.18" height="35.0" bbox="[0.0, 358.21, 3.18, 393.21]" word_margin="0.1"> </LTTextLineVertical>
+    <LTTextLineVertical y0="190.71" y1="300.71" x0="0.0" x1="3.18" width="3.18" height="110.0" bbox="[0.0, 190.71, 3.18, 300.71]" word_margin="0.1"> </LTTextLineVertical>
+    <LTTextLineVertical y0="13.552" y1="133.21" x0="0.0" x1="5.724" width="5.724" height="119.658" bbox="[0.0, 13.552, 5.724, 133.21]" word_margin="0.1"> </LTTextLineVertical>
+  </LTPage>
+</pdfxml>

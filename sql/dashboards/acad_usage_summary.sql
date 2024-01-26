@@ -29,10 +29,6 @@ CREATE TABLE analytics_rpt.acad_usage_summary AS (
             ,SUM(CASE WHEN evnt_cat_name = 'Positive' THEN 1 ELSE 0 END) AS feedback_postive
             ,SUM(CASE WHEN evnt_cat_name = 'Negative' THEN 1 ELSE 0 END) AS feedback_negative
             ,(SUM(evnt_engagement_time_msec)/1000) AS engagement_time
-
-            ,COUNT(DISTINCT(CASE WHEN evnt_cat_name='Contact Us' THEN CONCAT(user_pseudo_id,evnt_ga_session_id) ELSE NULL END)) AS contact_us
-            ,COUNT(DISTINCT(CONCAT(user_pseudo_id,evnt_ga_session_id))) AS sessions_count
-
         FROM analytics_gds.ga4_events
         GROUP BY
             customer
