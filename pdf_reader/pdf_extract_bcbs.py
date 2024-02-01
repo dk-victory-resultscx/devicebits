@@ -1,6 +1,6 @@
 import logging
 import pandas as pd
-import fitz #PyMuPDF <-- from mupdf.com (e-book reader)
+import fitz #PyMuPDF
 import os
 
 logging.basicConfig(format='%(asctime)s %(message)s')
@@ -8,8 +8,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 #Hard-coded values
-input_path = '.\\pdf_reader\\input\\'
-output_path = '.\\pdf_reader\\output\\'
+input_path = '.\\pdf_reader\\input_bcbs\\'
+output_path = '.\\pdf_reader\\output_bcbs\\'
 
 
 def get_pdf_list():
@@ -82,10 +82,10 @@ def process_single_formulary(pdf_file, start_page, end_page):
 
 def main():
     pdf_list = get_pdf_list()
-    for pdf in pdf_list:
-        logging.info('Processing {}'.format(pdf))
-        start_page, end_page = get_page_number(pdf)
-        process_single_formulary(pdf, start_page, end_page)
+    for pdf_file in pdf_list:
+        logging.info('Processing {}'.format(pdf_file))
+        start_page, end_page = get_page_number(pdf_file)
+        process_single_formulary(pdf_file, start_page, end_page)
 
 
 main()
