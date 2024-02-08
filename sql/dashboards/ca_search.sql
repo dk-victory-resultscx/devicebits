@@ -15,12 +15,10 @@ CREATE TABLE analytics_rpt.ca_search AS (
         
     FROM analytics_gds.ca_search
     WHERE
-        (
         customer IS NOT NULL
-        OR LOWER(user_email) not like '%@results-cx.com%'
-        OR LOWER(user_email) not like '%@supportpredict.com%'
-        OR LOWER(user_email) not like '%@deviceibits.com%'
-        )
+        AND LOWER(user_email) not like '%@results-cx%'
+        AND LOWER(user_email) not like '%@supportpredict%'
+        AND LOWER(user_email) not like '%@devicebits%'
         AND timestamp_date > CAST('2020-12-31' AS DATE)
     GROUP BY
         customer

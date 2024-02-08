@@ -36,6 +36,8 @@ BEGIN
 
 			,page_url
 			,name AS content_name
+            ,content_type
+            ,action
 			,content_id
 			,COUNT(content_id) AS content_id_count
 			,COUNT(page_url) AS pageview_count
@@ -44,12 +46,11 @@ BEGIN
 			
 		FROM analytics_gds.ca_pageviews
 		WHERE
-			(
 			customer IS NOT NULL
-			OR LOWER(user_email) not like '%@results-cx.com%'
-			OR LOWER(user_email) not like '%@supportpredict.com%'
-			OR LOWER(user_email) not like '%@deviceibits.com%'
-			)
+            AND LOWER(user_email) not like '%@results-cx%'
+            AND LOWER(user_email) not like '%@supportpredict%'
+            AND LOWER(user_email) not like '%@devicebits%'
+            AND timestamp_date > CAST('2020-12-31' AS DATE)
 			AND timestamp_date > (CURRENT_DATE - 4)
 		GROUP BY
 			customer
@@ -60,6 +61,8 @@ BEGIN
 			,timestamp_year
 			,page_url
 			,content_name
+            ,content_type
+            ,action
 			,content_id
 	);
 	

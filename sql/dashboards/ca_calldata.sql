@@ -17,12 +17,10 @@ CREATE TABLE analytics_rpt.ca_calldata AS (
         
     FROM analytics_gds.ca_calldata
     WHERE
-        (
         customer IS NOT NULL
-        OR LOWER(user_email) not like '%@results-cx.com%'
-        OR LOWER(user_email) not like '%@supportpredict.com%'
-        OR LOWER(user_email) not like '%@deviceibits.com%'
-        )
+        AND LOWER(user_email) not like '%@results-cx%'
+        AND LOWER(user_email) not like '%@supportpredict%'
+        AND LOWER(user_email) not like '%@devicebits%'
         AND SAFE_CAST(FORMAT_TIMESTAMP('%Y-%m-%d', timestamp, 'America/New_York') AS DATE) > CAST('2020-12-31' AS DATE)
     GROUP BY
         customer

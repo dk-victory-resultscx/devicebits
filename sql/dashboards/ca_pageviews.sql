@@ -9,6 +9,8 @@ CREATE TABLE analytics_rpt.ca_pageviews AS (
 
         ,page_url
         ,name AS content_name
+        ,content_type
+        ,action
         ,content_id
         ,COUNT(content_id) AS content_id_count
         ,COUNT(page_url) AS pageview_count
@@ -17,12 +19,10 @@ CREATE TABLE analytics_rpt.ca_pageviews AS (
         
     FROM analytics_gds.ca_pageviews
     WHERE
-        (
         customer IS NOT NULL
-        OR LOWER(user_email) not like '%@results-cx.com%'
-        OR LOWER(user_email) not like '%@supportpredict.com%'
-        OR LOWER(user_email) not like '%@deviceibits.com%'
-        )
+        AND LOWER(user_email) not like '%@results-cx%'
+        AND LOWER(user_email) not like '%@supportpredict%'
+        AND LOWER(user_email) not like '%@devicebits%'
         AND timestamp_date > CAST('2020-12-31' AS DATE)
     GROUP BY
         customer
@@ -33,5 +33,7 @@ CREATE TABLE analytics_rpt.ca_pageviews AS (
         ,timestamp_year
         ,page_url
         ,content_name
+        ,content_type
+        ,action
         ,content_id
 )
