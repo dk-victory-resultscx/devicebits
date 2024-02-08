@@ -1,19 +1,27 @@
+from pathlib import Path
 import pandas as pd
 import logging
 import tabula
 import csv
 import os
 
+# Logger
 logging.basicConfig(format='%(asctime)s %(message)s')
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-#Hard-coded values
+# Hard-coded values
 input_path = '.\\pdf_reader\\input_amh\\'
 output_path = '.\\pdf_reader\\output_amh\\'
 drug_tier_list = ['1', '2', '3', '4', '5', '1.0', '2.0', '3.0', '4.0', '5.0', ]
 
+# Path Creation
+Path(input_path).mkdir(parents=True, exist_ok=True)
+Path(output_path).mkdir(parents=True, exist_ok=True)
+
+
 def get_pdf_list():
+    logger.info('Getting files from {}'.format(input_path))
     pdf_list = []
     file_list = os.listdir(input_path)
     for file in file_list:
@@ -22,7 +30,9 @@ def get_pdf_list():
 
     return pdf_list
 
+
 def convert_pdf_to_csv(pdf_file):
+    logger.info('....Converting {} to CSV.'.format(pdf_file))
     main_df = pd.DataFrame()
     output_name = str(pdf_file).split('.')[0] + '.tmp'
     dfs = tabula.read_pdf(input_path + pdf_file, pages='all', stream=True, pandas_options={'header': None}, lattice=True)
@@ -33,11 +43,14 @@ def convert_pdf_to_csv(pdf_file):
         main_df = pd.concat([main_df, df])
 
     main_df.to_csv(output_name, sep='|', index=False)
+    logger.info('........{} created for processing.'.format(output_name))
     return output_name
 
+
 def process_amh_csv(tmp_file):
+    logger.info('............Processing {}'.format(tmp_file))
     data = dict()
-    with open(tmp_file, mode ='r')as file:
+    with open(tmp_file, mode='r') as file:
         tmp_file = csv.reader(file, delimiter='|')
         active_status = 0
         counter = 0
@@ -70,6 +83,7 @@ def process_amh_csv(tmp_file):
 
     return data
 
+
 def get_drug_tier(line):
     drug_tier = ''
     if line[1] in drug_tier_list:
@@ -78,6 +92,7 @@ def get_drug_tier(line):
         drug_tier = int(float(line[2]))
 
     return drug_tier
+
 
 def get_drug_limit(line):
     drug_limit = ''
@@ -88,6 +103,7 @@ def get_drug_limit(line):
 
     return drug_limit
 
+
 def get_ignore_list():
     with open('.\\pdf_reader\\ignore_list.txt') as f:
         ignore_list = f.read().splitlines()
@@ -95,10 +111,12 @@ def get_ignore_list():
 
     return ignore_list
 
+
 def main():
     pdf_list = get_pdf_list()
     ignore_list = get_ignore_list()
     for pdf_file in pdf_list:
+        logger.info('Loading {}'.format(pdf_file))
         file_name = convert_pdf_to_csv(pdf_file)
         data = process_amh_csv(file_name)
         output_file = file_name.split('.')[0] + '.csv'
@@ -111,5 +129,9 @@ def main():
 
         file.close()
         os.remove(file_name)
+        logger.info('................Done processing {}'.format(pdf_file))
+        logger.info('....................Output: {}'.format(output_path + output_file))
 
-main()
+
+if __name__ == "__main__":
+    main()

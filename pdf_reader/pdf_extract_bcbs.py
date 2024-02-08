@@ -1,8 +1,10 @@
-import logging
+from pathlib import Path
 import pandas as pd
-import fitz #PyMuPDF
+import logging
+import fitz
 import os
 
+# Logger
 logging.basicConfig(format='%(asctime)s %(message)s')
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -11,8 +13,13 @@ logger.setLevel(logging.DEBUG)
 input_path = '.\\pdf_reader\\input_bcbs\\'
 output_path = '.\\pdf_reader\\output_bcbs\\'
 
+# Path Creation
+Path(input_path).mkdir(parents=True, exist_ok=True)
+Path(output_path).mkdir(parents=True, exist_ok=True)
+
 
 def get_pdf_list():
+    logger.info('Getting files from {}'.format(input_path))
     pdf_list = []
     file_list = os.listdir(input_path)
     for file in file_list:
@@ -22,7 +29,7 @@ def get_pdf_list():
     return pdf_list
 
 
-def read_pdf(pdf_file):
+def read_pdf(pdf_file):    
     full_pdf_path = input_path + pdf_file
     doc = fitz.open(full_pdf_path)
 
@@ -57,11 +64,13 @@ def get_page_number(pdf_file):
     return start_page, end_page
 
 
-def process_single_formulary(pdf_file, start_page, end_page):
+def process_single_formulary(pdf_file, start_page, end_page):    
     drug_type = ''
     output_name = str(pdf_file).split('.')[0]
     formulary_df = pd.DataFrame(columns=['drug_type', 'drug_name', 'drug_tier', 'requirements_limits'])
-    doc = read_pdf(pdf_file)
+    logger.info('Loading PDF File {}'.format(pdf_file))
+    doc = read_pdf(pdf_file)    
+    logger.info('....Processing {}'.format(pdf_file))
     for page in doc:
         page_list = str(page).split(' ')
         page_number = int(page_list[1])
@@ -78,14 +87,16 @@ def process_single_formulary(pdf_file, start_page, end_page):
 
     formulary_df = formulary_df.dropna()
     formulary_df.to_excel(output_path + '{}.xlsx'.format(output_name), index=False)
+    logger.info('........Done processing {}'.format(pdf_file))
+    logger.info('............Output: {}'.format(output_path + output_name + '.xlsx'))
 
 
 def main():
     pdf_list = get_pdf_list()
-    for pdf_file in pdf_list:
-        logging.info('Processing {}'.format(pdf_file))
+    for pdf_file in pdf_list:        
         start_page, end_page = get_page_number(pdf_file)
-        process_single_formulary(pdf_file, start_page, end_page)
+        process_single_formulary(pdf_file, start_page, end_page)        
 
 
-main()
+if __name__ == "__main__":
+    main()
