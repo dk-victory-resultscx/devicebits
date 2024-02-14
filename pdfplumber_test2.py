@@ -16,3 +16,20 @@ with open('pdfplumber_tables.csv', 'w') as file:
 
                 im.save('test.png')
 file.close()
+
+###############
+list1 = [
+    "foo", 
+    "bar",
+    "\n",
+    "baz",
+    "qux"
+]
+
+import itertools
+result = []
+for k,v in itertools.groupby(list1, key=lambda line: line==None):
+    if not k:
+        result.append(list(v))
+
+print(result)
