@@ -57,7 +57,7 @@ def process_amh_csv(tmp_file):
         for line in tmp_file:
             if line[0] == 'Drug Name':
                 active_status = 1
-                
+
             if active_status == 1:
                 if any(x.strip() for x in line):
                     old_line = counter

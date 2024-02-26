@@ -12,6 +12,7 @@ CREATE TABLE analytics_rpt.ca_feedbackshares AS (
         ,rating_percent
         ,content_type
         ,content_id
+        ,name AS content_name
         ,COUNT(content_id) AS content_id_count
         ,COUNT(DISTINCT(content_id)) AS distinct_content_id_count
         ,COUNT(DISTINCT(user_email)) AS user_count
@@ -36,4 +37,5 @@ CREATE TABLE analytics_rpt.ca_feedbackshares AS (
         ,rating_percent
         ,content_type
         ,content_id
+        ,content_name
 )

@@ -34,7 +34,7 @@ BEGIN
 			,timestamp_quarter
 			,timestamp_year
 
-			,page_url
+			--,page_url
 			,name AS content_name
             ,content_type
             ,action
@@ -59,7 +59,7 @@ BEGIN
 			,timestamp_month
 			,timestamp_quarter
 			,timestamp_year
-			,page_url
+			--,page_url
 			,content_name
             ,content_type
             ,action

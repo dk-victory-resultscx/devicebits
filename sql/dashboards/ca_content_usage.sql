@@ -1,4 +1,4 @@
-CREATE TABLE analytics_rpt.ca_pageviews AS (
+CREATE TABLE analytics_rpt.ca_content_usage AS (
     SELECT
         customer
         ,timestamp_date
@@ -7,6 +7,11 @@ CREATE TABLE analytics_rpt.ca_pageviews AS (
         ,timestamp_quarter
         ,timestamp_year
 
+        ,page_url
+        ,name AS content_name
+        ,content_type
+        ,action
+        ,content_id
         ,COUNT(content_id) AS content_id_count
         ,COUNT(page_url) AS pageview_count
         ,COUNT(DISTINCT(user_email)) AS user_count
@@ -26,4 +31,9 @@ CREATE TABLE analytics_rpt.ca_pageviews AS (
         ,timestamp_month
         ,timestamp_quarter
         ,timestamp_year
+        ,page_url
+        ,content_name
+        ,content_type
+        ,action
+        ,content_id
 )
