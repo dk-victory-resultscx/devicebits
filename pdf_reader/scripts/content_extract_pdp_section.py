@@ -1,17 +1,17 @@
-from pdf_reader.scripts import common_func
+import common_func
 import pdfplumber
-import os, re
+import re, os
 
 # Hard-coded values
-input_path = '.\\pdf_reader\\input\\amh\\'
-output_path = '.\\pdf_reader\\output\\amh\\'
+input_path = os.getcwd() + '\\pdf_reader\\input\\pdp\\'
+output_path = os.getcwd() + '\\pdf_reader\\output\\pdp\\'
 pdf_file = 'sample.pdf'
 
 def initial_pages(page, file_name, pdf_file_name):
     bounding_box = (80, 100, 550, 800)            
     crop_area = page.within_bbox(bounding_box)
 
-    file_content = open('{} {}.csv'.format(pdf_file_name, file_name), 'ab')
+    file_content = open(output_path + '{} {}.csv'.format(pdf_file_name, file_name), 'ab')
     content = crop_area.extract_text(
                                     x_tolerance=1
                                     ,y_tolerance=3
@@ -20,12 +20,10 @@ def initial_pages(page, file_name, pdf_file_name):
     file_content.write(content + '\n'.encode('utf-8'))
     file_content.close()
 
-def extact_text(pdf_file):
+def extract_text(pdf_file):
     pdf_file_name = str(pdf_file).split('.')[0]
-    pdf = pdfplumber.open(pdf_file)
-    chapter = str()
-    section = str()
-    sub_section = str()
+    pdf = pdfplumber.open(input_path + pdf_file)
+    chapter, section, sub_section = str(), str(), str()
     new_line = '\n'.encode('utf-8')
 
     for page in pdf.pages:
@@ -48,14 +46,12 @@ def extact_text(pdf_file):
                 decoded_line = line.decode('utf-8')
                 line_chapter = common_func.get_chapter(decoded_line)
                 chapter = line_chapter if line_chapter else chapter
-                file_chapter = open('{} {}.csv'.format(pdf_file_name, chapter), 'ab')
 
                 if re.match('^SECTION \d+', decoded_line):
                     section = common_func.get_section(decoded_line, '^SECTION \d+')
-                    common_func.draw_line(file_chapter)
-                    file_chapter.write(line + new_line)
-                else:
-                    if re.match('^Section \d+', decoded_line):
+                    
+                file_chapter = open(output_path + '{} {} {}.csv'.format(pdf_file_name, chapter, section), 'ab')
+                if re.match('^Section \d+', decoded_line):
                         line_section = common_func.get_section(decoded_line, '^Section \d+')
                         sub_section = line_section if line_section else sub_section
 
@@ -63,8 +59,8 @@ def extact_text(pdf_file):
                             file_chapter.write('\n*'.encode('utf-8') + line + new_line)
                         else:
                             file_chapter.write(line + new_line)
-                    else:
-                        file_chapter.write(line + new_line)
+                else:
+                    file_chapter.write(line + new_line)
 
         if chapter == 'CHAPTER 4' and sub_section in ('Section 5.2', 'Section 5.3', 'Section 5.4', 'Section 5.5'):
             fix_table(page, sub_section, file_chapter)
@@ -94,5 +90,11 @@ def fix_table(page, section, csv_file):
                     csv_file.write('\n'.encode('utf-8'))
             csv_file.write(('----------------------------------------------------\n\n').encode('utf-8'))
 
-common_func.purge(os.curdir, 'sample.pdf')
-extact_text('sample.pdf')
+def main():
+    pdf_list = common_func.get_pdf_list(input_path)
+    for pdf_file in pdf_list:
+        common_func.purge(output_path, pdf_file)
+        extract_text(pdf_file)
+
+if __name__ == '__main__':
+    main()

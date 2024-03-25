@@ -12,7 +12,7 @@ CREATE TABLE analytics_rpt.ca_search AS (
         ,COUNT(search_term) AS search_term_count
         ,COUNT(DISTINCT(user_email)) AS user_count
         ,COUNT(DISTINCT(session_id)) AS session_count
-        
+
     FROM analytics_gds.ca_search
     WHERE
         customer IS NOT NULL
